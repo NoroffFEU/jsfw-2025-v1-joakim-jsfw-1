@@ -1,14 +1,10 @@
 {
+  "name": "jsw-assignment-root",
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@tanstack/react-query": "^5.90.21"
-  },
-  "devDependencies": {
-    "@tanstack/react-query-devtools": "^5.91.3"
+    "dev": "npm --prefix ./my-react-ts-app run dev",
+    "build": "npm --prefix ./my-react-ts-app run build",
+    "lint": "npm --prefix ./my-react-ts-app run lint",
+    "preview": "npm --prefix ./my-react-ts-app run preview"
   }
 }
