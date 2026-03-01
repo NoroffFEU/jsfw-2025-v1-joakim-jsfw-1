@@ -1,4 +1,6 @@
 [build]
   base = "my-react-ts-app"
-  command = "npm run build"
+  command = "npm install && npm run build"
   publish = "dist"
+
+
