@@ -1,62 +1,63 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import AutocomplettSearchBar from "./interface/AutocomplettSearchBar";
 
 interface Product {
-  id: string
-  title: string
-  description: string
-  price: number
-  discountedPrice: number
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  discountedPrice: number;
   image: {
-    url: string
-    alt: string
-  }
-  rating: number
-  tags: Array<string>
+    url: string;
+    alt: string;
+  };
+  rating: number;
+  tags: Array<string>;
   reviews: Array<{
-    id: string
-    username: string
-    rating: number
-    description: string
-  }>
+    id: string;
+    username: string;
+    rating: number;
+    description: string;
+  }>;
 }
 
 function App() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const [products, setProducts] = useState<Array<Product>>([])
-  const [loading, setLoading] = useState<boolean>(true)
-  const [error, setError] = useState<string | null>(null)
+  const [products, setProducts] = useState<Array<Product>>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('https://v2.api.noroff.dev/online-shop/')
+    fetch("https://v2.api.noroff.dev/online-shop/")
       .then((response) => {
-        console.log('Response status:', response.status)
-        console.log('Content-Type:', response.headers.get('content-type'))
+        console.log("Response status:", response.status);
+        console.log("Content-Type:", response.headers.get("content-type"));
         if (!response.ok) {
-          throw new Error('Failed to fetch products')
+          throw new Error("Failed to fetch products");
         }
-        return response.json()
+        return response.json();
       })
       .then((data) => {
-        console.log('API response:', data)
-        setProducts(data.data)
-        setLoading(false)
+        console.log("API response:", data);
+        setProducts(data.data);
+        setLoading(false);
       })
       .catch((err) => {
-        console.error('Full error:', err)
-        setError(err.message)
-        setLoading(false)
-      })
-  }, [])
+        console.error("Full error:", err);
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
 
   const toogleMenu = (): void => {
-    setIsMenuOpen(!isMenuOpen)
-  }
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   const purchaseButtonClick = (productId: string): void => {
-    console.log(`Purchase button clicked for product ID: ${productId}`)
-  }
+    console.log(`Purchase button clicked for product ID: ${productId}`);
+  };
   return (
     <>
       <header className="text-white bg-[#7f7d7d30] ">
@@ -68,8 +69,8 @@ function App() {
           <div
             className={`dropdown-menu absolute lg:static top-16 lg:top-0 left-0 lg:left-auto bg-[#7f7d7d30] lg:bg-transparent w-full lg:w-auto flex flex-col lg:flex-row gap-8 items-center py-2 lg:py-0 text-lg font-bold transition-all duration-300  ${
               isMenuOpen
-                ? 'translate-y-0 opacity-100'
-                : '-translate-y-full opacity-0 pointer-events-none lg:translate-y-0 lg:opacity-100 lg:pointer-events-auto'
+                ? "translate-y-0 opacity-100"
+                : "-translate-y-full opacity-0 pointer-events-none lg:translate-y-0 lg:opacity-100 lg:pointer-events-auto"
             }`}
           >
             <ul className="flex flex-col lg:flex-row gap-8">
@@ -89,7 +90,7 @@ function App() {
               <button className="cursor-pointer">
                 <i
                   className="fa-solid fa-cart-arrow-down"
-                  style={{ color: '#7fd1ae' }}
+                  style={{ color: "#7fd1ae" }}
                 ></i>
               </button>
             </div>
@@ -105,10 +106,11 @@ function App() {
       </header>
 
       <main>
+        <AutocomplettSearchBar />
         {loading && <p>Loading products...</p>}
-        {error && <p>Error: {error}</p>}{' '}
+        {error && <p>Error: {error}</p>}{" "}
         {!loading && !error && (
-          <div className="product-list grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-6 p-4">
+          <div className="product-list justify-items-center grid grid-cols-1 m-10 sm:grid-cols-3 gap-x-70 gap-y-6 p-6">
             {products.map((product: Product) => (
               <Link
                 key={product.id}
@@ -116,13 +118,13 @@ function App() {
                 className="product-card block "
               >
                 <div>
-                  {' '}
+                  {" "}
                   <img
                     className="w-50 h-50"
                     src={product.image.url}
                     alt={product.image.alt}
                   />
-                  <h2 className="font-bold text-2xl  ">{product.title}</h2>
+                  <h2 className="font-bold  text-2xl  ">{product.title}</h2>
                   <p className="font-light">{product.description}</p>
                   <p className="font-medium">Price: ${product.price}</p>
                   <p className="font-medium">
@@ -140,8 +142,8 @@ function App() {
                   </div>
                   <button
                     onClick={(e) => {
-                      e.preventDefault()
-                      purchaseButtonClick(product.id)
+                      e.preventDefault();
+                      purchaseButtonClick(product.id);
                     }}
                     className="bg-[#7f7d7d30] m-6 py-2 px-8 leading-6 rounded-full font-semibold tracking-wide cursor-pointer inline-flex items-center justify-center relative shadow transtion hover:bg-amber-300 hover:shadow-md outline-none ring-amber-300/70 ring-offset-2 focus-visible:ring-2 foucus:scale-[0.98] disabled:bg-amber-300/50 disabled:cursor-not-allowed disabled:shadow"
                   >
@@ -154,7 +156,7 @@ function App() {
         )}
       </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
