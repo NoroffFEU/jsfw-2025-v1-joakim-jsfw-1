@@ -1,16 +1,16 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import './index.css'
-import App from './App.tsx'
-import ProductPage from './ProductPage.tsx'
-import ContactPage from './ContactPage.tsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./index.css";
+import App from "./App.tsx";
+import ProductPage from "./pages/ProductPage.tsx";
+import ContactPage from "./pages/ContactPage.tsx";
 
 const container =
-  document.getElementById('root') ?? document.getElementById('app')
+  document.getElementById("root") ?? document.getElementById("app");
 
 if (!container) {
-  throw new Error('Target container is not a DOM element.')
+  throw new Error("Target container is not a DOM element.");
 }
 
 createRoot(container).render(
@@ -23,4 +23,4 @@ createRoot(container).render(
       </Routes>
     </BrowserRouter>
   </StrictMode>,
-)
+);
