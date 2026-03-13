@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import useShoppingCart from "../context/ShoppingcartContext";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const items = useShoppingCart((s) => s.items);
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
 
   const toogleMenu = (): void => {
     setIsMenuOpen(!isMenuOpen);
@@ -36,12 +39,18 @@ export function Navbar() {
           </ul>
 
           <div className="flex flex-col lg:flex-row items-center gap-8">
-            <button className="cursor-pointer">
-              <i
-                className="fa-solid fa-cart-arrow-down"
-                style={{ color: "#7fd1ae" }}
-              ></i>
-            </button>
+            <Link
+              to="/cart"
+              onClick={() => setIsMenuOpen(false)}
+              className="relative cursor-pointer p-2 rounded-md"
+            >
+              <i className="fa-solid fa-cart-arrow-down text-white transition-all duration-200 hover:text-gray-500 hover:scale-110"></i>
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
           </div>
         </div>
         <div
