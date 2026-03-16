@@ -1,5 +1,6 @@
 import { useEffect, useState, type ComponentProps } from "react";
 import { StoreItem } from "../components/StoreItem";
+import AutocompleteSearchBar from "../interface/AutocomplettSearchBar";
 
 type StoreItemData = ComponentProps<typeof StoreItem>;
 
@@ -93,12 +94,15 @@ export default function HomePage() {
   if (error) return <p className="text-red-600">{error}</p>;
 
   return (
-    <main className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {products.map((product) => (
-        <div key={product.id} className="flex flex-col">
-          <StoreItem {...product} />
-        </div>
-      ))}
-    </main>
+    <>
+      <AutocompleteSearchBar />
+      <main className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {products.map((product) => (
+          <div key={product.id} className="flex flex-col">
+            <StoreItem {...product} />
+          </div>
+        ))}
+      </main>
+    </>
   );
 }
