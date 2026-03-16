@@ -1,10 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App.tsx";
-import ProductPage from "./pages/ProductPage.tsx";
-import ContactPage from "./pages/ContactPage.tsx";
 
 const container =
   document.getElementById("root") ?? document.getElementById("app");
@@ -16,11 +14,7 @@ if (!container) {
 createRoot(container).render(
   <StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/product/:productId" element={<ProductPage />} />
-      </Routes>
+      <App />
     </BrowserRouter>
   </StrictMode>,
 );
