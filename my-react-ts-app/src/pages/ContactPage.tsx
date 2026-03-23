@@ -24,7 +24,7 @@ function ContactPage() {
     resolver: zodResolver(contactSchema),
   });
 
-  const onSubmit = async (_data: ContactFormValues) => {
+  const onSubmit = async () => {
     await new Promise((resolve) => setTimeout(resolve, 600));
     setShowPopup(true);
     reset();
@@ -36,9 +36,9 @@ function ContactPage() {
       <h1 className="text-2xl font-bold mb-4">Contact</h1>
 
       {showPopup ? (
-        <div className="flex items-center gap-2 mb-6">
-          <span className="icon-[line-md--check-all] inline-block w-6 h-6 text-green-300" />
-          <p className="text-green-700 font-medium rounded border border-green-300 bg-green-50 px-2 py-1">
+        <div className="flex items-center gap-2 rounded border border-green-300 bg-green-50 px-2 py-1">
+          <span className="icon-[line-md--check-all] inline-block w-6 h-6 text-green-700" />
+          <p className="text-green-700 font-medium">
             Thanks! Your message has been sent. We will be in contact soon.
           </p>
         </div>
