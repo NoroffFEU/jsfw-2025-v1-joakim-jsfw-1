@@ -94,7 +94,7 @@ export function StoreItem({
         <button
           type="button"
           onClick={() => addToCart({ id, title, image, price: salePrice })}
-          className="rounded bg-black px-4 py-2 text-white cursor-pointer"
+          className="rounded bg-[#812a00] px-4 py-2  hover:bg-[#8f4b2a] transition-colors  text-white cursor-pointer"
           aria-label={`Add ${title} to cart`}
         >
           Add to cart
@@ -105,7 +105,7 @@ export function StoreItem({
             <button
               type="button"
               onClick={() => decreaseCartQuantity(id)}
-              className="h-8 w-8 rounded border"
+              className="h-8 w-8 rounded border border-[#812a00] text-[#812a00] hover:bg-[#812a00] hover:text-white transition-colors cursor-pointer"
               aria-label={`Decrease quantity of ${title}`}
             >
               -
@@ -116,7 +116,7 @@ export function StoreItem({
               onClick={() =>
                 increaseCartQuantity({ id, title, image, price: salePrice })
               }
-              className="h-8 w-8 rounded border"
+              className="h-8 w-8 rounded border border-[#812a00] text-[#812a00] hover:bg-[#812a00] hover:text-white transition-colors cursor-pointer"
               aria-label={`Increase quantity of ${title}`}
             >
               +

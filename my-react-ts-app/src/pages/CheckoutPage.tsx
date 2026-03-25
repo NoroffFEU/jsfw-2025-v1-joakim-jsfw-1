@@ -38,6 +38,19 @@ export default function CheckoutPage() {
   const items = useShoppingCart((s) => s.items);
   const clearCart = useShoppingCart((s) => s.clearCart);
 
+  const [cardType, setCardType] = useState<"visa" | "mastercard">("visa");
+  const [card, setCard] = useState({
+    number: "",
+    name: "",
+    expiry: "",
+    cvc: "",
+  });
+
+  const onCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setCard((prev) => ({ ...prev, [name]: value }));
+  };
+
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -84,7 +97,7 @@ export default function CheckoutPage() {
       setIsSubmitting(true);
       await new Promise((resolve) => setTimeout(resolve, 700)); // simulate async call
       clearCart();
-      navigate("/", { replace: true });
+      navigate("/checkout/success", { replace: true });
     } catch {
       setSubmitError("Could not complete checkout. Please try again.");
     } finally {
@@ -182,10 +195,75 @@ export default function CheckoutPage() {
             </div>
           </div>
 
+          <div className="mt-4 space-y-3">
+            <h2 className="font-semibold text-base">Payment</h2>
+
+            <div className="flex rounded border overflow-hidden w-fit">
+              <button
+                type="button"
+                onClick={() => setCardType("visa")}
+                className={`px-4 py-2 text-sm font-medium transition-colors ${
+                  cardType === "visa"
+                    ? "bg-[#812a00] cursor-pointer hover:bg-[#8f4b2a] transition-colors text-white"
+                    : "bg-white text-gray-600 hover:bg-gray-200 cursor-pointer"
+                }`}
+              >
+                Debit card
+              </button>
+              <button
+                type="button"
+                onClick={() => setCardType("mastercard")}
+                className={`px-4 py-2 text-sm font-medium transition-colors border-l ${
+                  cardType === "mastercard"
+                    ? "bg-[#812a00] cursor-pointer hover:bg-[#8f4b2a] transition-colors text-white"
+                    : "bg-white text-gray-600 hover:bg-gray-200 cursor-pointer"
+                }`}
+              >
+                Credit card
+              </button>
+            </div>
+
+            <input
+              name="number"
+              value={card.number}
+              onChange={onCardChange}
+              placeholder="Card number"
+              maxLength={19}
+              className="w-full rounded border p-2"
+            />
+
+            <input
+              name="name"
+              value={card.name}
+              onChange={onCardChange}
+              placeholder="Name on card"
+              className="w-full rounded border p-2"
+            />
+
+            <div className="grid grid-cols-2 gap-3">
+              <input
+                name="expiry"
+                value={card.expiry}
+                onChange={onCardChange}
+                placeholder="MM / YY"
+                maxLength={7}
+                className="w-full rounded border p-2"
+              />
+              <input
+                name="cvv"
+                value={card.cvc}
+                onChange={onCardChange}
+                placeholder="CVV"
+                maxLength={4}
+                className="w-full rounded border p-2"
+              />
+            </div>
+          </div>
+
           <button
             type="submit"
             disabled={isSubmitting}
-            className="mt-2 rounded bg-black px-4 py-2 text-white disabled:opacity-50"
+            className="mt-2 rounded bg-[#812a00] px-4 py-2 text-white disabled:opacity-50 cursor-pointer hover:bg-[#8f4b2a] transition-colors"
           >
             {isSubmitting ? "Placing order..." : "Place order"}
           </button>
