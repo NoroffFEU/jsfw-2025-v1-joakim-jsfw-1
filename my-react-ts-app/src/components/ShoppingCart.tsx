@@ -22,13 +22,6 @@ export default function ShoppingCart() {
     <section className="space-y-4 mt-4">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold">Cart ({totalItems})</h2>
-        <button
-          type="button"
-          onClick={clearCart}
-          className="rounded bg-gray-200 px-3 py-1 text-sm"
-        >
-          Clear cart
-        </button>
       </div>
 
       <ul className="space-y-3">
@@ -47,11 +40,11 @@ export default function ShoppingCart() {
                 />
                 <div>
                   <p className="font-medium">{item.title}</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-200">
                     ${item.price.toFixed(2)} × {item.quantity} = $
                     {lineTotal.toFixed(2)}
                   </p>
-                  <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+                  <p className="text-sm text-gray-200">Qty: {item.quantity}</p>
                 </div>
               </div>
 
@@ -83,7 +76,7 @@ export default function ShoppingCart() {
                 <button
                   type="button"
                   onClick={() => removeFromCart(item.id)}
-                  className="ml-2 rounded bg-red-500 px-3 py-2 text-white"
+                  className="ml-2 rounded bg-red-500 px-3 py-2 text-white hover:bg-red-600 transition-colors cursor-pointer"
                 >
                   Remove
                 </button>
@@ -95,10 +88,17 @@ export default function ShoppingCart() {
       <div className="flex justify-end border-t pt-2 pr-2">
         <p className="text-lg font-bold">Total: ${totalPrice.toFixed(2)}</p>
       </div>
-      <div className="flex justify-center pt-2">
+      <div className="flex justify-center pt-2 gap-10">
+        <button
+          type="button"
+          onClick={clearCart}
+          className="rounded bg-[#812a00] px-3 py-1 text-sm hover:bg-[#8f4b2a] transition-colors cursor-pointer"
+        >
+          Clear cart
+        </button>
         <Link
           to="/checkout"
-          className="inline-flex items-center justify-center rounded bg-black px-6 py-2 text-white hover:bg-gray-800"
+          className="inline-flex items-center justify-center rounded bg-[#812a00] px-6 py-2 text-white hover:bg-[#8f4b2a] transition-colors"
         >
           Checkout
         </Link>
