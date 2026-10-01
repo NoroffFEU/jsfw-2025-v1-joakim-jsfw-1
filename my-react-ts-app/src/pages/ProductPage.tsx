@@ -1,58 +1,58 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import type { Product } from "../interface/api";
-import useShoppingCart from "../context/ShoppingcartContext";
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import type { Product } from '../interface/api'
+import useShoppingCart from '../context/ShoppingcartContext'
 
 function ProductPage() {
-  const { productId } = useParams();
-  const { addToCart } = useShoppingCart();
+  const { productId } = useParams()
+  const { addToCart } = useShoppingCart()
 
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [product, setProduct] = useState<Product | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     if (!productId) {
-      setError("Missing product ID.");
-      setLoading(false);
-      return;
+      setError('Missing product ID.')
+      setLoading(false)
+      return
     }
 
     const fetchProduct = async () => {
       try {
-        setLoading(true);
-        setError(null);
+        setLoading(true)
+        setError(null)
 
         const response = await fetch(
           `https://v2.api.noroff.dev/online-shop/${productId}`,
-        );
+        )
 
         if (!response.ok) {
-          throw new Error("Failed to fetch product");
+          throw new Error('Failed to fetch product')
         }
 
-        const data = await response.json();
-        setProduct(data.data);
+        const data = await response.json()
+        setProduct(data.data)
       } catch (fetchError) {
         if (fetchError instanceof Error) {
-          setError(fetchError.message);
+          setError(fetchError.message)
         } else {
-          setError("Unexpected error while loading product");
+          setError('Unexpected error while loading product')
         }
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
-    fetchProduct();
-  }, [productId]);
+    fetchProduct()
+  }, [productId])
 
   if (loading) {
     return (
       <main className="p-6">
         <p>Loading product...</p>
       </main>
-    );
+    )
   }
 
   if (error) {
@@ -61,21 +61,21 @@ function ProductPage() {
         <h1 className="text-2xl font-bold mb-4">Product Page</h1>
         <p className="mb-6 text-red-500">Error: {error}</p>
       </main>
-    );
+    )
   }
 
   if (!product) {
     return (
       <main className="mx-auto max-w-4xl p-6">
         <h1 className="text-2xl font-bold mb-4">Product Page</h1>
-        <p className="text-red-500 mb-6">{error ?? "Product not found."}</p>
+        <p className="text-red-500 mb-6">{error ?? 'Product not found.'}</p>
       </main>
-    );
+    )
   }
 
-  const salePrice = product.discountedPrice ?? product.price;
-  const hasDiscount = salePrice < product.price;
-  const ratingValue = Number.isFinite(product.rating) ? product.rating : 0;
+  const salePrice = product.discountedPrice ?? product.price
+  const hasDiscount = salePrice < product.price
+  const ratingValue = Number.isFinite(product.rating) ? product.rating : 0
 
   return (
     <main className="mx-auto max-w-4xl p-6">
@@ -83,7 +83,7 @@ function ProductPage() {
         <img
           src={product.image.url}
           alt={product.image.alt}
-          className="w-full md:w-96 object-cover rounded-lg"
+          className="w-max md:w-50 object-cover rounded-lg"
         />
 
         <div className="flex flex-col gap-4 flex-1">
@@ -130,7 +130,7 @@ function ProductPage() {
         </div>
       </div>
     </main>
-  );
+  )
 }
 
-export default ProductPage;
+export default ProductPage

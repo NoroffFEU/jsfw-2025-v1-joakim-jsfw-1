@@ -1,16 +1,21 @@
-import { Routes, Route } from "react-router-dom";
-import ContactPage from "./pages/ContactPage";
-import ProductPage from "./pages/ProductPage";
-import HomePage from "./pages/HomePage";
-import { Navbar } from "./components/navbar";
-import ShoppingCart from "./components/ShoppingCart";
-import CheckoutPage from "./pages/CheckoutPage";
-import CheckoutSuccessPage from "./pages/CheckoutSuccessPage";
+import { Routes, Route } from 'react-router-dom'
+import ContactPage from './pages/ContactPage'
+import ProductPage from './pages/ProductPage'
+import HomePage from './pages/HomePage'
+import { Navbar } from './components/navbar'
+import ShoppingCart from './components/ShoppingCart'
+import CheckoutPage from './pages/CheckoutPage'
+import CheckoutSuccessPage from './pages/CheckoutSuccessPage'
+import Notification from './components/notifaction'
+import useShoppingCart from './context/ShoppingcartContext'
 
 function App() {
+  const notification = useShoppingCart((state) => state.notification)
+
   return (
     <>
       <Navbar />
+      <Notification message={notification} />
 
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -21,7 +26,7 @@ function App() {
         <Route path="/checkout/success" element={<CheckoutSuccessPage />} />
       </Routes>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
